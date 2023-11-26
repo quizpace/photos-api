@@ -31,6 +31,10 @@ app.post("/upload", upload.single("photo"), (req, res) => {
   res.send("File uploaded successfully.");
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello, this is your server!"); // Or any other response you want for the root URL
+});
+
 // Start the server
 const PORT = 6700;
 app.listen(PORT, () => {
