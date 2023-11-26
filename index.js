@@ -8,14 +8,16 @@ const app = express();
 // Serve static files from the 'photos' directory
 app.use("/photos", express.static(path.join(__dirname, "photos")));
 
-// Enable CORS for specific origin
-app.use(
-  cors({
-    origin: "https://photos-api-mzpl.onrender.com",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true, // if you're using cookies or authentication headers
-  })
-);
+// Enable CORS - Allow all origins
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 // Set up Multer storage configuration
 const storage = multer.diskStorage({
