@@ -1,14 +1,21 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
-const cors = require("cors"); // Import the cors package
+const cors = require("cors");
 
 const app = express();
 
 // Serve static files from the 'photos' directory
 app.use("/photos", express.static(path.join(__dirname, "photos")));
-// Use cors middleware to enable CORS for all routes
-app.use(cors());
+
+// Enable CORS for specific origin
+app.use(
+  cors({
+    origin: "https://photos-api-mzpl.onrender.com",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // if you're using cookies or authentication headers
+  })
+);
 
 // Set up Multer storage configuration
 const storage = multer.diskStorage({
@@ -31,8 +38,9 @@ app.post("/upload", upload.single("photo"), (req, res) => {
   res.send("File uploaded successfully.");
 });
 
+// Root endpoint
 app.get("/", (req, res) => {
-  res.send("Hello, this is your server!"); // Or any other response you want for the root URL
+  res.send("Hello, this is your server!");
 });
 
 // Start the server
