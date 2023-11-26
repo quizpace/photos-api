@@ -5,6 +5,8 @@ const cors = require("cors"); // Import the cors package
 
 const app = express();
 
+// Serve static files from the 'photos' directory
+app.use("/photos", express.static(path.join(__dirname, "photos")));
 // Use cors middleware to enable CORS for all routes
 app.use(cors());
 
