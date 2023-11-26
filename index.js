@@ -47,7 +47,13 @@ const path = require("path");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://photos-api-mzpl.onrender.com/", // Replace with your actual client's domain
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // If you are using cookies or authentication headers
+  })
+);
 
 // Serve uploaded photos from the 'photos' directory
 app.use("/uploads", express.static(path.join(__dirname, "photos")));
