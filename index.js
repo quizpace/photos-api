@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
 });
 
 // Start the server
-const PORT = 6800;
+const PORT = 6900;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
