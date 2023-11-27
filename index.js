@@ -5,8 +5,8 @@ const cors = require("cors");
 
 const app = express();
 
-// Serve static files from the 'photos' directory
-app.use("/photos", express.static(path.join(__dirname, "photos")));
+const photosDirectory = path.resolve(__dirname, "photos");
+app.use("/photos", express.static(photosDirectory));
 
 // Enable CORS - Allow all origins
 app.use((req, res, next) => {
@@ -37,7 +37,18 @@ app.post("/upload", upload.single("photo"), (req, res) => {
   if (!req.file) {
     return res.status(400).send("No file uploaded.");
   }
-  res.send("File uploaded successfully.");
+
+  // Construct the URL to the uploaded image
+  const imageUrl = `${req.protocol}://${req.get("host")}/photos/${
+    req.file.filename
+  }`;
+
+  console.log("Uploaded Image URL:", imageUrl); // Log the URL for debugging
+
+  // Send back HTML response with a link to the uploaded image
+  res.send(
+    `<h1>File uploaded successfully!</h1><a href="${imageUrl}" target="_blank">View Uploaded Image</a>`
+  );
 });
 
 // Root endpoint
