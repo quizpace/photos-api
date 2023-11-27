@@ -25,9 +25,13 @@ const storage = multer.diskStorage({
     cb(null, "photos"); // Files will be saved in the 'photos' directory
   },
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()}${path.extname(file.originalname)}`);
+    cb(null, file.originalname);
   },
 });
+//   filename: (req, file, cb) => {
+//     cb(null, `${Date.now()}${path.extname(file.originalname)}`);
+//   },
+// });
 
 // Set up multer upload
 const upload = multer({ storage });
